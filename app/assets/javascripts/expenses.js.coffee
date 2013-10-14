@@ -29,3 +29,38 @@ $ ->
   $('#expense_category_id').select2(
     placeholder: "Category"
   )
+
+
+
+  # Chart
+
+  $('#expenses_chart').highcharts({
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false
+    },
+    title: {
+        text: 'Expenses by category'
+    },
+    tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+      pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+              enabled: true,
+              color: '#000000',
+              connectorColor: '#000000',
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          }
+      }
+    },
+    series: [{
+      type: 'pie',
+      name: 'Category',
+      data: gon.chart_data
+    }]
+  });

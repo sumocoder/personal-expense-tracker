@@ -5,7 +5,11 @@ Sumoexpense::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'expenses#index'
 
-  resources :expenses
+  resources :expenses do
+    collection do
+      get 'analyze'
+    end
+  end
   resources :categories
   resources :merchants
 
