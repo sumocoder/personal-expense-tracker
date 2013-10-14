@@ -1,0 +1,16 @@
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: sumoexpense_dev
+  host: localhost
+
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: sumoexpense_test
+  host: localhost
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: sumoexpense

@@ -1,0 +1,44 @@
+%h1 Expenses
+
+- flash.each do |key, value|
+  - if value.class == Array
+    %div{class: "#{flash_class(key)}"}
+      %ul
+        - value.each do |v|
+          %li= v
+  - else
+    %div{class: "#{flash_class(key)}"}= value
+
+.row
+  .col-lg-4
+    .purchase_date
+  .col-lg-4
+    = form_for Expense.new, url: {action: "create"}, html: {class: 'form' } do |f|
+      = f.hidden_field :purchase_date, placeholder: 'Date', class: 'form-control'        
+      .form-group
+        = f.select :category_id, Category.all.collect {|c| [ c.name, c.id ] }, include_blank: true
+      .form-group
+        = f.select :merchant_id, Merchant.all.collect {|m| [ m.name, m.id ] }, include_blank: true
+      .form-group
+        = f.text_field :cost, placeholder: 'Cost', class: 'form-control'
+      = f.submit "Add", class: 'btn btn-default'
+
+.row.expense_table
+  .col-lg-12
+    - if @expenses.present?
+      %table.table.table-striped
+        %thead
+          %tr
+            %th #
+            %th Merchant
+            %th Category
+            %th Purchased on
+            %th Cost
+        %tbody
+        - @expenses.each do |expense|
+          %tr
+            %td= expense.id
+            %td= expense.merchant.try(:name)
+            %td= expense.category.try(:name)
+            %th= expense.purchase_date.strftime("%d-%m-%Y")
+            %td= expense.cost
