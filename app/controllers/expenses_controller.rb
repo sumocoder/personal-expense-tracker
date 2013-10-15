@@ -15,9 +15,9 @@ class ExpensesController < ApplicationController
   end
 
   def analyze
-    expenses_grouped = Expense.find_by_sql("SELECT categories.name, SUM(expenses.cost) AS total_cost FROM expenses inner join categories on expenses.category_id=categories.id GROUP BY categories.name")
-    categories_total = expenses_grouped.sum(&:total_cost) 
-    gon.chart_data = expenses_grouped.collect { |e| [e.name, (e.total_cost/categories_total).to_f ]}
+    @expenses_grouped = Expense.find_by_sql("SELECT categories.name, SUM(expenses.cost) AS total_cost FROM expenses inner join categories on expenses.category_id=categories.id GROUP BY categories.name ORDER BY total_cost DESC")
+    @categories_total = @expenses_grouped.sum(&:total_cost) 
+    gon.chart_data = @expenses_grouped.collect { |e| [e.name, (e.total_cost/@categories_total).to_f ]}
   end
 
   def destroy
