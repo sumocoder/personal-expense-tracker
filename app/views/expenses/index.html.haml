@@ -13,15 +13,26 @@
   .col-lg-4
     .purchase_date
   .col-lg-4
-    = form_for Expense.new, url: {action: "create"}, html: {class: 'form' } do |f|
-      = f.hidden_field :purchase_date, placeholder: 'Date', class: 'form-control'        
-      .form-group
-        = f.select :category_id, Category.all.collect {|c| [ c.name, c.id ] }, include_blank: true
-      .form-group
-        = f.select :merchant_id, Merchant.all.collect {|m| [ m.name, m.id ] }, include_blank: true
-      .form-group
-        = f.text_field :cost, placeholder: 'Cost', class: 'form-control'
-      = f.submit "Add", class: 'btn btn-default'
+    .row
+      = form_for Expense.new, url: {action: "create"}, html: {class: 'form' } do |f|
+        = f.hidden_field :purchase_date, placeholder: 'Date', class: 'form-control'        
+        .form-group
+          = f.select :category_id, Category.all.collect {|c| [ c.name, c.id ] }, include_blank: true
+        .form-group
+          = f.select :merchant_id, Merchant.all.collect {|m| [ m.name, m.id ] }, include_blank: true
+        .form-group
+          = f.text_field :cost, placeholder: 'Cost', class: 'form-control'
+        = f.submit "Add", class: 'btn btn-default'
+    .row.top-buffer
+      = form_for @category, html: { class: 'form-inline' } do |f|
+        .form-group
+          = f.text_field :name, placeholder: 'New Category', class: 'form-control'
+        = f.submit 'Add', class: 'btn btn-default'
+    .row.top-buffer
+      = form_for @merchant, html: { class: 'form-inline' }  do |f|
+        .form-group
+          = f.text_field :name, placeholder: 'New Merchant', class: 'form-control'
+        = f.submit 'Add', class: 'btn btn-default'
 
 .row.expense_table
   .col-lg-12

@@ -1,6 +1,8 @@
 class ExpensesController < ApplicationController
 
   def index
+    @category = Category.new
+    @merchant = Merchant.new
     @expenses = Expense.includes([:merchant, :category]).order("purchase_date DESC").load
   end
 
